@@ -1,0 +1,18 @@
+name: S3 Deployment
+on:
+  push:
+    branches:
+    - main
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v4
+    - name:  Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{secrets.AWS_ACCESS_KEYID}}
+        aws-secret-access-key-id: ${{secrets.AWS_SECRETACCESS_KEYID}}
+    - name: Deploy static Html website on s3 bucket
+      run: aws s3 sync . s3://${{ vars.S3_BUCKET_NAME }}  --delete

@@ -12,8 +12,8 @@ jobs:
     - name:  Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-access-key-id: ${{secrets.AWS_ACCESS_KEYID}}
-        aws-secret-access-key-id: ${{secrets.AWS_SECRETACCESS_KEYID}}
+        aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+        aws-secret-access-key-id: ${{secrets.AWS_SECRET_ACCESS_KEY}}
         aws-region: ${{ vars.AWS_REGION}}
     - name: Deploy static Html website on s3 bucket
       run: aws s3 sync . s3://${{ vars.S3_BUCKET_NAME }}  --delete

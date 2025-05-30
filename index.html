@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Buy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        body {
+            background: #f4f5f7;
+            color: #1a1a1a;
+        }
+        /* Desktop and larger screens (default layout) */
+        header {
+            background: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-weight: bold;
+            flex: 1;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex: 3;
+            margin-right: 10%;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.2s;
+            
+        }
+
+        nav a:hover {
+            color: #32cd32;
+        }
+
+        /* Button style */
+        .button {
+            background: #32cd32;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            flex: 1;
+            text-align: center;
+        }
+
+        .button:hover {
+            background: #28a428;
+        }
+
+        .hamburger {
+            display: none; /* Hide hamburger by default on desktop */
+        }
+
+        /* Mobile view adjustments */
+        @media (max-width: 768px) {
+            header {
+                position: relative;
+            }
+            
+            nav {
+                display: none; /* Initially hide the navigation links */
+                flex-direction: column;
+                gap: 1rem;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background-color: white;
+                padding: 1rem;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            nav a {
+                text-align: center;
+                padding: 0.5rem;
+            }
+
+            .hamburger {
+                display: block; /* Show the hamburger icon on mobile */
+                cursor: pointer;
+                font-size: 1.5rem;
+                margin-left: 5%;
+
+            }
+
+            .hamburger.open + nav {
+                display: flex; /* Show the nav when hamburger is clicked */
+            }
+            
+            .button-container {
+                flex: initial;
+            }
+        }
+
+        .hero {
+            position: relative;
+            height: 350px; /* Height for the hero image */
+            background: url('2024-Rolls-Royce-Droptail-Arcadia-001-1600.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding-bottom: 30px; /* Ensure there's space for the search form below */
+        }
+
+        .search-form {
+            background: white;
+            padding: 1rem 1rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            margin-top: 10px;  /* Adds some space below the hero image */
+            margin-bottom: 2rem;  /* Adds space before the cards */
+            max-width: 70%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-form select, .search-form input {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .search-form .button {
+            width: auto;
+            min-width: 100px;
+            
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Default: 3 columns */
+            gap: 1.5rem;
+            padding: 0.5rem;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .card h3 {
+            margin: 0.5rem 0;
+        }
+        .card .price {
+            color: green;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+        .search-form {
+            flex-direction: column;
+            align-items: stretch;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .search-form select,
+        .search-form input {
+            width: 100%;
+        }
+        .search-form button {
+        display: block;
+        width: 200px; /* Or any desired width */
+        margin: 0 auto;
+        }
+        .cards {
+        grid-template-columns: 1fr; /* Small screens: 1 column */
+        }
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><strong>Car</strong></div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Browse Cars</a>
+            <a href="#">How It Works</a>
+            <a href="#">Pricing</a>
+            <a href="#">About</a>
+        </nav>
+        <div class="button-container">
+            <button class="button">Drive Car</button>
+        </div>
+        <!-- Hamburger icon for mobile -->
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+    </header>
+    
+    <div class="hero-wrapper">
+        <div class="hero">
+            <h1>Search cars</h1>
+        </div>
+
+        <div class="search-form">
+            <input type="text" id="location" placeholder="Location">
+            <input type="date" id="availability">
+            <select id="price">
+                <option value="">Any Price</option>
+                <option value="range1">$25000 - $50000</option>
+                <option value="range2">$51000 - $75000</option>
+                <option value="range3">$75000 - $250000</option>
+            </select>
+            <select id="type">
+                <option value="">Any Type</option>
+                <option value="Sedan">Sedan</option>
+                <option value="SUV">SUV</option>
+                <option value="Sport">Sport</option>
+                <option value="GT">GT</option>
+            </select>
+            <select id="brand">
+                <option value="">Any Brand</option>
+                <option value="Polestar">Polestar</option>
+                <option value="Pagani">Pagani</option>
+                <option value="Porsche">Porsche</option>
+                <option value="Aston Martin">Aston Martin</option>
+                <option value="Land Rover">Land Rover</option>
+                <option value="Bugatti">Bugatti</option>
+            </select>
+            <div class="button-container">
+                <button class="button" onclick="filterCars()">Search</button>
+            </div>
+        </div>    
+    </div>
+
+    <div class="cards" id="car-list">
+        <div class="card" data-price="69900" data-type="Sedan" data-brand="Porsche">
+            <img src="2025-Porsche-Taycan-Turbo-GT-001-2160.jpg" alt="Tesla Model S">
+            <h3>Porsche Tycan S</h3>
+            <p>Electric • AWD • 2025 Model</p>
+            <p class="price">$69900</p>
+        </div>
+        <div class="card" data-price="45000" data-type="Sedan" data-brand="PoleStar">
+            <img src="2024-Polestar-6-BST-Concept-001-2160.jpg" alt="Tesla Model 3">
+            <h3>PoleStar Bt </h3>
+            <p>Electric • AWD • 2025 Model</p>
+            <p class="price">$45000</p>
+        </div>
+        <div class="card" data-price="155000" data-type="Sport" data-brand="Pagani">
+            <img src="2021-Pagani-Imola-010-2160.jpg" alt="Tesla Model X">
+            <h3>Pagani Impola</h3>
+            <p>Sport • RWD • 2023 Model</p>
+            <p class="price">$155000</p>
+        </div>
+        <div class="card" data-price="85000" data-type="GT" data-brand="Aston Martin">
+            <img src="aston_martin_db12_2023_4k_2-1920x1080.jpg" alt="Tesla Model S">
+            <h3>Aston Martin DB12</h3>
+            <p>Combustion V12 • RWD • 2025 Model</p>
+            <p class="price">$85000</p>
+        </div>
+        <div class="card" data-price="65000" data-type="SUV" data-brand="Land Rover">
+            <img src="land_rover_defender_110_v8_bond_edition_2021_5k-HD.jpg" alt="Tesla Model 3">
+            <h3>Land Rover Defender</h3>
+            <p>Combustion V8 • 4x4 • 2025 Model</p>
+            <p class="price">$65000</p>
+        </div>
+        <div class="card" data-price="250000" data-type="Sport" data-brand="Bugatti">
+            <img src="2026-Bugatti-Tourbillon-006-1080.jpg" alt="Tesla Model X">
+            <h3>Bugatti Tourbillon</h3>
+            <p>Hybrid V16 • AWD • 2026 Model</p>
+            <p class="price">$250000</p>
+        </div>
+    </div>
+
+    <script>
+        function filterCars() {
+            const priceRange = document.getElementById('price').value;
+            const type = document.getElementById('type').value;
+            const brand = document.getElementById('brand').value;
+
+            const cars = document.querySelectorAll('.card');
+
+            cars.forEach(car => {
+                const carPrice = parseInt(car.dataset.price);
+                const carType = car.dataset.type;
+                const carBrand = car.dataset.brand;
+
+                let matchPrice = !priceRange; // Default to true if no price range selected
+        
+                if (priceRange === "range1") {
+                    matchPrice = carPrice >= 25000 && carPrice <= 50000;
+                } else if (priceRange === "range2") {
+                    matchPrice = carPrice >= 51000 && carPrice <= 75000;
+                } else if (priceRange === "range3") {
+                    matchPrice = carPrice >= 75000 && carPrice <= 250000;
+                }
+                
+                // Case-insensitive comparison for brand
+                const matchType = !type || (carType.toLowerCase() === type.toLowerCase());
+                const matchBrand = !brand || (carBrand.toLowerCase() === brand.toLowerCase());
+
+                if (matchPrice && matchType && matchBrand) {
+                    car.style.display = '';
+                } else {
+                    car.style.display = 'none';
+                }
+            });
+        }
+
+        function toggleMenu() {
+            const nav = document.querySelector('nav');
+            const hamburger = document.querySelector('.hamburger');
+
+            // Toggle the display of the navigation
+            if (nav.style.display === 'flex') {
+                nav.style.display = 'none'; // Hide the menu
+                hamburger.classList.remove('open'); // Optional: Remove open class for visual feedback
+            } else {
+                nav.style.display = 'flex'; // Show the menu
+                hamburger.classList.add('open'); // Optional: Add open class for visual feedback
+            }
+        }
+    </script>
+</body>
+</html>
